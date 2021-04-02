@@ -1,0 +1,15 @@
+<VirtualHost kinomonster.com:8080>
+ DocumentRoot C:\xampp\htdocs\kinomonster
+ ServerName kinomonster.com
+ ServerAdmin admin@kinomonster.com
+ <Directory "C:\xampp\htdocs\kinomonster">
+  Options Indexes FollowSymLinks
+  Allow from all
+  Require all granted
+  IndexIgnore /
+  RewriteEngine on
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . index.php
+ </Directory>
+</VirtualHost>
