@@ -2,52 +2,41 @@
 
 require_once 'include/db.php';
 
-$uploaddir = 'uploads/';
-
 echo "<h1 class='h1'>Страница с результатами</h1>";
 
-$name = htmlspecialchars(empty($_GET['firstname']));
-$surname = htmlspecialchars(empty($_GET['lastname']));
-$email = htmlspecialchars(empty($_GET['email']));
-$gender = htmlspecialchars(empty($_GET['gender']));
-$age = htmlspecialchars(empty($_GET['course']));
-$txt = htmlspecialchars(empty($_GET['contact_list']));
-$chbx = htmlspecialchars(empty($_GET['chbx']));
-$uploadfile = $uploaddir . basename(empty($_FILES['userfile']['name']));
+if(isset($_GET['otprav'])){
+	$name = trim(empty($_REQUEST['firstname'])) ? "" : $_GET['firstname'];
+	$surname = trim(empty($_REQUEST['lastname'])) ? "" : $_GET['lastname'];
+	$email = trim(empty($_REQUEST['email'])) ? "" : $_GET['email'];
+	$gender = trim(empty($_REQUEST['gender'])) ? "" : $_GET['gender'];
+	$age = trim(empty($_REQUEST['course'])) ? "" : $_GET['course'];
+	$txt = trim(empty($_REQUEST['contact_list'])) ? "" : $_GET['contact_list'];
+	$chbx = trim(empty($_REQUEST['level'])) ? "" : $_GET['level'];
 
-if (!empty($_GET['chbx']) && is_array($_GET['chbx'])) {
-	$chbx = "[" . join(", ", $_GET['chbx']). "]\n";
-} 
-
-if (move_uploaded_file(empty($_FILES['userfile']['tmp_name']), $uploadfile)) {
-	$file = $_FILES['userfile']['name'] . " - " . " Файл корректен и был успешно загружен.";
-} else {
-	$file = "Файл не загружен. Возможная атака с помощью файловой загрузки!";
-}
+	if (!empty($_GET['level']) && is_array($_GET['level'])) {
+		$chbx = "[" . join(", ", $_GET['level']). "]\n";
+	} 
 
 // echo '<pre>';
 // echo 'Некоторая отладочная информация:';
 // echo "<br>";
-// var_dump($_FILES);
+// print_r($_FILES);
 // print "</pre>";
 
-// echo "<pre>";
-// var_dump($_GET);
-// echo "</pre>";
+	$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `gender`, `level`, `course`, `contact_list`)
+	VALUES ('$name', '$surname', '$email', '$gender', '$chbx', '$age', '$txt')";
 
+	if ($conn->query($sql) === TRUE) {
+	} else {
+		echo "Ошибка: " . $sql . "<br>" . $conn->error;
+	}
+	header('location: http://'. $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 
-$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `level`, `gender`, `course`, `userfile`, `contact_list`)
-VALUES ('$name', '$surname', '$email', '$chbx', '$gender', '$age', '$uploadfile', '$txt')";
-
-if ($conn->query($sql) === TRUE) {
-} else {
-	echo "Ошибка: " . $sql . "<br>" . $conn->error;
 }
-
 // Поверка, есть ли GET запрос
-if (isset($_GET['pageno'])) {
+	if (isset($_GET['pageno'])) {
     // Если да то переменной $pageno присваиваем его
-	$pageno = $_GET['pageno'];
+		$pageno = $_GET['pageno'];
 } else { // Иначе
     // Присваиваем $pageno один
 	$pageno = 1;
@@ -57,7 +46,7 @@ if (isset($_GET['pageno'])) {
 $size_page = 10;
 if (isset($_GET['page']) && $_GET['page'] > 0) 
 {
-    $cur_page = $_GET['page'];
+	$cur_page = $_GET['page'];
 }
 // Вычисляем с какого объекта начать выводить
 $offset = ($pageno-1) * $size_page;
@@ -85,7 +74,6 @@ if ($result->num_rows > 0) {
 	<th scope='col'>Уровень</th>
 	<th scope='col'>Пол</th>
 	<th scope='col'>Возраст</th>
-	<th scope='col'>Файл</th>
 	<th scope='col'>Сообщение</th>
 	</tr>";
 // Цикл для вывода строк
@@ -98,7 +86,6 @@ if ($result->num_rows > 0) {
 		<td scope='row'>".$row["level"]."</td>
 		<td scope='row'>".$row["gender"]."</td>
 		<td scope='row'>".$row["course"]."</td>
-		<td scope='row'>".$row["userfile"]."</td>
 		<td scope='row'>".$row["contact_list"]."</td>
 		</tr>";
 	}
@@ -106,7 +93,6 @@ if ($result->num_rows > 0) {
 } else {
 	echo "0 results";
 }
-
 // Закрываем соединение с БД
 mysqli_close($conn);
 
@@ -133,11 +119,9 @@ mysqli_close($conn);
 			</li>
 			<li><a href="?pageno=<?php echo $total_pages; ?>">Последняя</a></li>
 		</ul>
-	</nav><!-- 
-	<div class="row">
+	</nav>
 		<div class="offset-md-4 col-sm-6">
-			<button style="width: 300px; margin: 0 auto;" type="submit" class="btn btn-primary btn-lg" name="return" onclick="history.back();">Вернуться</button>
+			<a title="Страница с формой" class="badge badge-primary" role="button" accesskey="n" name="nubex" href="index.php" style="display: block;">Назад</a>
 		</div>
-	</div> -->
 </body>
 </html>

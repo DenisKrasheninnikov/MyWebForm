@@ -8,43 +8,45 @@
 	<title>Contact Us</title>
 </head>
 <body>
-	<form action="display.php" method="GET" enctype="multipart/form-data">
+	<form action="display.php" name="myForm" method="GET" enctype="multipart/form-data">
 		<h1 class="h1">Связаться с нами</h1>
 		<div class="form-item>">
 			<div class="form-group">
-				<input type="text" class="form-control" name="firstname" placeholder="Имя" required>
+				<input type="text" class="form-control" name="firstname" onfocus="this.value=''" placeholder="Имя" required>
 			</div>
 
 			<div class="form-group">
-				<input type="text" class="form-control" name="lastname" placeholder="Фамилия" required>
+				<input type="text" class="form-control" name="lastname" onfocus="this.value=''" placeholder="Фамилия" required>
 			</div>
 
 			<div class="form-group">
-				<input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="E-mail" required>
+				<input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" onfocus="this.value=''" placeholder="E-mail" required>
 			</div>
 		</div>
 
-		<div>
-			<p>Ваш уровень:</p>
-			<input type="checkbox" class="custom-checkbox" id="v1" name="chbx[]" value="basic">
-			<label for="v1">Базовый</label>
-			<br>
-			<input type="checkbox" class="custom-checkbox" id="v2" name="chbx[]" value="advanced">
-			<label for="v2">Продвинутый</label>
-			<br>
-			<input type="checkbox" class="custom-checkbox" id="v3" name="chbx[]" value="professional">
-			<label for="v3">Профессиональный</label>
-		</div>
+		
+		<p>Ваш уровень:</p>
+		<input type="checkbox" class="form-check-input custom-checkbox" id="v1" name="level[]" value="basic">
+		<label class="form-check-label" for="v1">Базовый</label>
+		<br>
+		
+		<input type="checkbox" class="form-check-input custom-checkbox" id="v2" name="level[]" value="advanced">
+		<label class="form-check-label" for="v2">Продвинутый</label>
+		<br>
+
+		<input type="checkbox" class="form-check-input custom-checkbox" id="v3" name="level[]" value="professional">
+		<label class="form-check-label" for="v3">Профессиональный</label>
+		<br><br>
 
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
-				<label class="input-group-text" for="inputGroupSelect01">Возраст</label>
+				<label class="input-group-text" name="course" for="inputGroupSelect01">Возраст</label>
 			</div>
 			<select class="custom-select" name="course" id="inputGroupSelect01" required>
 				<option selected>Выберите...</option>
-				<option value="1">Молодой</option>
-				<option value="2">В самом расцвете сил</option>
-				<option value="3">Пожилой</option>
+				<option value="до 18 лет">Молодой</option>
+				<option value="от 18 до 45 лет">В самом расцвете сил</option>
+				<option value="после 45 лет">Пожилой</option>
 			</select>
 		</div>
 
@@ -62,18 +64,11 @@
 		</div>
 		<br>
 
-		<div class="custom-file inputfile-box form-group">
-			<input type="file" name="userfile" class="custom-file-input inputfile" id="inputGroupFile02" onchange='uploadFile(this)' required>
-			<label class="custom-file-label" for="inputGroupFile02">Загрузить файл</label>
-		</div>
-		<br><br>
-
 		<div class="form-group">
-			<textarea name="contact_list" class="form-control" placeholder="Введите текст" required></textarea>
+			<textarea name="contact_list" class="form-control" onfocus="this.value=''" placeholder="Введите текст" required></textarea>
 		</div>
 
 		<button type="submit" class="btn btn-primary btn-lg btn-block" name="otprav">Отправить</button>
-		<button type="reset" class="btn btn-secondary btn-lg btn-block" name="res">Очистить</button>
 	</form>
 </body>
 <script type="text/javascript">
