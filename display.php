@@ -17,26 +17,47 @@ if(isset($_GET['otprav'])){
 		$chbx = "[" . join(", ", $_GET['level']). "]\n";
 	} 
 
+	$name_tema = "=?utf-8?b?". base64_encode($name) ."?=";
+
+	$subject ="Новая заявка с сайта";
+	$subject1 = "=?utf-8?b?". base64_encode($subject) ."?=";
+/*
+$message ="\n\nСообщение: ".$message."\n\nИмя: " .$name."\n\nФамилия: ".$surname."\n\n";
+*/
+$message1 ="\n\nИмя: ".$name."\n\nФамилия: " .$surname."\n\nE-mail: " .$email."\n\nСообщение: ".$txt."\n\n";	
+
+
+$header = "Content-Type: text/plain; charset=utf-8\n";
+
+$header .= "From: Новая заявка <deniskrasheninnikov73@gmail.com>\n\n";	
+$mail = mail("deniskrasheninnikov73@gmail.com", $subject1, iconv ('utf-8', 'windows-1251', $message1), iconv ('utf-8', 'windows-1251', $header));
+
+if($mail) {
+	echo 'OK';
+} else {
+	echo '<div class="notification_error">'.$error.'</div>';
+}
+
 // echo '<pre>';
 // echo 'Некоторая отладочная информация:';
 // echo "<br>";
 // print_r($_FILES);
 // print "</pre>";
 
-	$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `gender`, `level`, `course`, `contact_list`)
-	VALUES ('$name', '$surname', '$email', '$gender', '$chbx', '$age', '$txt')";
+$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `gender`, `level`, `course`, `contact_list`)
+VALUES ('$name', '$surname', '$email', '$gender', '$chbx', '$age', '$txt')";
 
-	if ($conn->query($sql) === TRUE) {
-	} else {
-		echo "Ошибка: " . $sql . "<br>" . $conn->error;
-	}
-	header('location: http://'. $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+if ($conn->query($sql) === TRUE) {
+} else {
+	echo "Ошибка: " . $sql . "<br>" . $conn->error;
+}
+header('location: http://'. $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 
 }
 // Поверка, есть ли GET запрос
-	if (isset($_GET['pageno'])) {
+if (isset($_GET['pageno'])) {
     // Если да то переменной $pageno присваиваем его
-		$pageno = $_GET['pageno'];
+	$pageno = $_GET['pageno'];
 } else { // Иначе
     // Присваиваем $pageno один
 	$pageno = 1;
@@ -120,8 +141,5 @@ mysqli_close($conn);
 			<li><a href="?pageno=<?php echo $total_pages; ?>">Последняя</a></li>
 		</ul>
 	</nav>
-		<div class="offset-md-4 col-sm-6">
-			<a title="Страница с формой" class="badge badge-primary" role="button" accesskey="n" name="nubex" href="index.php" style="display: block;">Назад</a>
-		</div>
 </body>
 </html>

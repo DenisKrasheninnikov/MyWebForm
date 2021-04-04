@@ -14,16 +14,13 @@
 			<div class="form-group">
 				<input type="text" class="form-control" name="firstname" onfocus="this.value=''" placeholder="Имя" required>
 			</div>
-
 			<div class="form-group">
 				<input type="text" class="form-control" name="lastname" onfocus="this.value=''" placeholder="Фамилия" required>
 			</div>
-
 			<div class="form-group">
 				<input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" onfocus="this.value=''" placeholder="E-mail" required>
 			</div>
 		</div>
-
 		
 		<p>Ваш уровень:</p>
 		<input type="checkbox" class="form-check-input custom-checkbox" id="v1" name="level[]" value="basic">
@@ -33,11 +30,9 @@
 		<input type="checkbox" class="form-check-input custom-checkbox" id="v2" name="level[]" value="advanced">
 		<label class="form-check-label" for="v2">Продвинутый</label>
 		<br>
-
 		<input type="checkbox" class="form-check-input custom-checkbox" id="v3" name="level[]" value="professional">
 		<label class="form-check-label" for="v3">Профессиональный</label>
 		<br><br>
-
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<label class="input-group-text" name="course" for="inputGroupSelect01">Возраст</label>
@@ -49,7 +44,6 @@
 				<option value="после 45 лет">Пожилой</option>
 			</select>
 		</div>
-
 		<div class="input-group">
 			<div class="form_toggle input-group-prepend">
 				<div class="form_toggle-item item-1">
@@ -63,13 +57,12 @@
 			</div>
 		</div>
 		<br>
-
 		<div class="form-group">
 			<textarea name="contact_list" class="form-control" onfocus="this.value=''" placeholder="Введите текст" required></textarea>
 		</div>
-
 		<button type="submit" class="btn btn-primary btn-lg btn-block" name="otprav">Отправить</button>
 	</form>
+	<script src="contactform.js"></script>
 </body>
 <script type="text/javascript">
 	function uploadFile(target) {
