@@ -4,7 +4,9 @@
 require_once 'include/db.php';
 
 echo "<h1 class='h1'>Страница с результатами</h1>";
+echo "<h2 class='h2'>Ваши данные получены. Скоро мы с Вами свяжемся.</h2>";
 
+//инициализация переменных
 if(isset($_POST['otprav'])){
 	$name = trim(empty($_REQUEST['firstname'])) ? "" : $_POST['firstname'];
 	$surname = trim(empty($_REQUEST['lastname'])) ? "" : $_POST['lastname'];
@@ -18,6 +20,7 @@ if(isset($_POST['otprav'])){
 		$chbx = "[" . join(", ", $_POST['level']). "]\n";
 	} 
 
+	//загрузка файла на сервер
 	if ($_FILES && $_FILES["filename"]["error"]== UPLOAD_ERR_OK)
 	{
 		$file = "uploades/" . $_FILES["filename"]["name"];
@@ -25,16 +28,16 @@ if(isset($_POST['otprav'])){
 		echo "Файл загружен";
 	}
 
+	//отправка данных формы на email
 	$to = "deniskrasheninnikov73@gmail.com"; //кому отправить письмо
 	$subject = "Письмо"; //Тема письма
 	$charset = "utf-8"; //кодировка
 	$headerss ="Content-type: text/html; charset=$charset\r\n"; 
 	$headerss.="MIME-Version: 1.0\r\n"; //технический заголовок письма
 	$headerss.="Date: ".date('D, d M Y h:i:s O')."\r\n";
-	$msg = "Имя: ".$_POST['firstname']."<br>"."Фамилия: ".$_POST['lastname']."<br>"."Пол: ".$_POST['gender']."<br>"."Возраст: ".$_POST['course']."<br>"; //текст сообщения для отправки
+	$msg = "Имя: ".$_POST['firstname']."<br>"."Фамилия: ".$_POST['lastname']."<br>"."Пол: ".$_POST['gender']."<br>"."Возраст: ".$_POST['course']."<br>"."Файл: ".$_FILES['filename']["name"]."<br>"; //текст сообщения для отправки
 	$msg .= "Сообщение: ".$_POST['contact_list']."<br>"; 
 	mail($to, $subject, $msg, $headerss); //собирает все введенные данные и отправляет их адресату
-	print "<script>alert(\"Сообщение успешно отправлено!\");window.location = window.location.href</script>"; //сообщение об отправке сообщения
 
 	// echo '<pre>';
 	// echo 'Некоторая отладочная информация:';
