@@ -4,18 +4,25 @@ require_once 'include/db.php';
 
 echo "<h1 class='h1'>Страница с результатами</h1>";
 
-if(isset($_GET['otprav'])){
-	$name = trim(empty($_REQUEST['firstname'])) ? "" : $_GET['firstname'];
-	$surname = trim(empty($_REQUEST['lastname'])) ? "" : $_GET['lastname'];
-	$email = trim(empty($_REQUEST['email'])) ? "" : $_GET['email'];
-	$gender = trim(empty($_REQUEST['gender'])) ? "" : $_GET['gender'];
-	$age = trim(empty($_REQUEST['course'])) ? "" : $_GET['course'];
-	$txt = trim(empty($_REQUEST['contact_list'])) ? "" : $_GET['contact_list'];
-	$chbx = trim(empty($_REQUEST['level'])) ? "" : $_GET['level'];
+if(isset($_POST['otprav'])){
+	$name = trim(empty($_REQUEST['firstname'])) ? "" : $_POST['firstname'];
+	$surname = trim(empty($_REQUEST['lastname'])) ? "" : $_POST['lastname'];
+	$email = trim(empty($_REQUEST['email'])) ? "" : $_POST['email'];
+	$gender = trim(empty($_REQUEST['gender'])) ? "" : $_POST['gender'];
+	$age = trim(empty($_REQUEST['course'])) ? "" : $_POST['course'];
+	$txt = trim(empty($_REQUEST['contact_list'])) ? "" : $_POST['contact_list'];
+	$chbx = trim(empty($_REQUEST['level'])) ? "" : $_POST['level'];
 
-	if (!empty($_GET['level']) && is_array($_GET['level'])) {
-		$chbx = "[" . join(", ", $_GET['level']). "]\n";
+	if (!empty($_POST['level']) && is_array($_POST['level'])) {
+		$chbx = "[" . join(", ", $_POST['level']). "]\n";
 	} 
+
+	if ($_FILES && $_FILES["filename"]["error"]== UPLOAD_ERR_OK)
+	{
+		$file = "uploades/" . $_FILES["filename"]["name"];
+		move_uploaded_file($_FILES["filename"]["tmp_name"], $file);
+		echo "Файл загружен";
+	}
 
 	// echo '<pre>';
 	// echo 'Некоторая отладочная информация:';
@@ -23,8 +30,8 @@ if(isset($_GET['otprav'])){
 	// print_r($_FILES);
 	// print "</pre>";
 
-	$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `gender`, `level`, `course`, `contact_list`)
-	VALUES ('$name', '$surname', '$email', '$gender', '$chbx', '$age', '$txt')";
+	$sql = "INSERT INTO `contactform` (`firstname`, `lastname`, `email`, `gender`, `level`, `course`, `contact_list`, `filename`)
+	VALUES ('$name', '$surname', '$email', '$gender', '$chbx', '$age', '$txt', '$file')";
 
 	if ($conn->query($sql) === TRUE) {
 	} else {
@@ -75,6 +82,7 @@ if ($result->num_rows > 0) {
 	<th scope='col'>Пол</th>
 	<th scope='col'>Возраст</th>
 	<th scope='col'>Сообщение</th>
+	<th scope='col'>Файл</th>
 	</tr>";
 // Цикл для вывода строк
 	while($row = mysqli_fetch_array($res_data)){
@@ -87,6 +95,7 @@ if ($result->num_rows > 0) {
 		<td scope='row'>".$row["gender"]."</td>
 		<td scope='row'>".$row["course"]."</td>
 		<td scope='row'>".$row["contact_list"]."</td>
+		<td scope='row'>".$row["filename"]."</td>
 		</tr>";
 	}
 	echo "</table>";

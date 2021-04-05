@@ -8,7 +8,7 @@
 	<title>Contact Us</title>
 </head>
 <body>
-	<form action="display.php" name="myForm" method="GET" enctype="multipart/form-data">
+	<form action="display.php" name="myForm" method="POST" enctype="multipart/form-data">
 		<h1 class="h1">Связаться с нами</h1>
 		<div class="form-item>">
 			<div class="form-group">
@@ -33,6 +33,7 @@
 		<input type="checkbox" class="form-check-input custom-checkbox" id="v3" name="level[]" value="professional">
 		<label class="form-check-label" for="v3">Профессиональный</label>
 		<br><br>
+
 		<div class="input-group mb-3">
 			<div class="input-group-prepend">
 				<label class="input-group-text" name="course" for="inputGroupSelect01">Возраст</label>
@@ -44,6 +45,13 @@
 				<option value="после 45 лет">Пожилой</option>
 			</select>
 		</div>
+
+		<div class="custom-file">
+			<input type="file" class="custom-file-input" id="validatedCustomFile" name="filename" size="10" required />
+			<label class="custom-file-label" for="validatedCustomFile">Загрузить файл...</label>
+		</div>
+		<br /><br />
+
 		<div class="input-group">
 			<div class="form_toggle input-group-prepend">
 				<div class="form_toggle-item item-1">
@@ -57,16 +65,13 @@
 			</div>
 		</div>
 		<br>
+
 		<div class="form-group">
 			<textarea name="contact_list" class="form-control" onfocus="this.value=''" placeholder="Введите текст" required></textarea>
 		</div>
+
 		<button type="submit" class="btn btn-primary btn-lg btn-block" name="otprav">Отправить</button>
 	</form>
 	<script src="contactform.js"></script>
 </body>
-<script type="text/javascript">
-	function uploadFile(target) {
-		document.getElementById("file-name").innerHTML = target.files[0].name;
-	}
-</script>
 </html>
