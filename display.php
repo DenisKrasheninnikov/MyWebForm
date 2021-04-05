@@ -1,5 +1,6 @@
 <?php 
 
+//подключаемся к базе данных
 require_once 'include/db.php';
 
 echo "<h1 class='h1'>Страница с результатами</h1>";
@@ -23,6 +24,17 @@ if(isset($_POST['otprav'])){
 		move_uploaded_file($_FILES["filename"]["tmp_name"], $file);
 		echo "Файл загружен";
 	}
+
+	$to = "deniskrasheninnikov73@gmail.com"; //кому отправить письмо
+	$subject = "Письмо"; //Тема письма
+	$charset = "utf-8"; //кодировка
+	$headerss ="Content-type: text/html; charset=$charset\r\n"; 
+	$headerss.="MIME-Version: 1.0\r\n"; //технический заголовок письма
+	$headerss.="Date: ".date('D, d M Y h:i:s O')."\r\n";
+	$msg = "Имя: ".$_POST['firstname']."<br>"."Фамилия: ".$_POST['lastname']."<br>"."Пол: ".$_POST['gender']."<br>"."Возраст: ".$_POST['course']."<br>"; //текст сообщения для отправки
+	$msg .= "Сообщение: ".$_POST['contact_list']."<br>"; 
+	mail($to, $subject, $msg, $headerss); //собирает все введенные данные и отправляет их адресату
+	print "<script>alert(\"Сообщение успешно отправлено!\");window.location = window.location.href</script>"; //сообщение об отправке сообщения
 
 	// echo '<pre>';
 	// echo 'Некоторая отладочная информация:';
