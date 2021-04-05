@@ -65,7 +65,7 @@ if (isset($_GET['pageno'])) {
 }
 
 // Назначаем количество данных на одной странице
-$size_page = 10;
+$size_page = 6;
 if (isset($_GET['page']) && $_GET['page'] > 0) 
 {
 	$cur_page = $_GET['page'];
@@ -134,15 +134,16 @@ mysqli_close($conn);
 <body>
 	<nav aria-label="Page navigation example">
 		<ul class="pagination justify-content-center">
-			<li><a href="?pageno=1">Первая</a></li>
-			<li class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
-				<a href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Предыдущая</a>
+			<li class="page-item"><a class="page-link" href="?pageno=1">Первая</a></li>
+			<li class="page-item" class="<?php if($pageno <= 1){ echo 'disabled'; } ?>">
+				<a class="page-link" href="<?php if($pageno <= 1){ echo '#'; } else { echo "?pageno=".($pageno - 1); } ?>">Предыдущая</a>
 			</li>
-			<li class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
-				<a href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Следующая</a>
+			<li class="page-item" class="<?php if($pageno >= $total_pages){ echo 'disabled'; } ?>">
+				<a class="page-link" href="<?php if($pageno >= $total_pages){ echo '#'; } else { echo "?pageno=".($pageno + 1); } ?>">Следующая</a>
 			</li>
-			<li><a href="?pageno=<?php echo $total_pages; ?>">Последняя</a></li>
+			<li class="page-item"><a class="page-link" href="?pageno=<?php echo $total_pages; ?>">Последняя</a></li>
 		</ul>
 	</nav>
+	<p class="text-center"><a href="index.php" class="btn btn-primary btn-lg active" onclick="return_to_initial_page(); return false;" title="Назад">Вернуться</a></p>
 </body>
 </html>
