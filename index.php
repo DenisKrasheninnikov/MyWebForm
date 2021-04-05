@@ -71,6 +71,7 @@
 		</div>
 
 		<button type="submit" class="btn btn-primary btn-lg btn-block" name="otprav">Отправить</button>
+		<button type="reset" class="btn btn-secondary btn-lg btn-block">Очистить</button>
 	</form>
 	<script src="contactform.js"></script>
 </body>
